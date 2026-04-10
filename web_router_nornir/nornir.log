@@ -1,0 +1,49 @@
+2026-01-21 10:49:00,972 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 1 hosts
+2026-01-21 10:49:08,991 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show interface'} on 1 hosts
+2026-01-21 10:49:14,269 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 1 hosts
+2026-01-21 11:08:19,047 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 1 hosts
+2026-01-21 11:11:47,670 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'terminal length 0'} on 1 hosts
+2026-01-21 11:11:51,446 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'terminal length 0'} on 1 hosts
+2026-01-21 11:11:52,457 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'terminal length 0'} on 1 hosts
+2026-01-21 11:11:58,881 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'terminal length 0'} on 1 hosts
+2026-01-21 11:12:00,365 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 1 hosts
+2026-01-21 11:12:01,406 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 1 hosts
+2026-01-21 11:28:29,064 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 1 hosts
+2026-01-21 11:29:55,450 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show interface'} on 1 hosts
+2026-01-21 11:30:52,354 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show interface descrip'} on 1 hosts
+2026-01-21 11:32:07,366 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 1 hosts
+2026-01-21 13:29:20,712 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 1 hosts
+2026-01-21 13:31:43,146 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 2 hosts
+2026-01-21 13:32:31,216 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 2 hosts
+2026-01-22 15:16:31,127 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 2 hosts
+2026-01-22 15:41:48,756 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 2 hosts
+2026-01-22 15:42:00,861 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 2 hosts
+2026-01-22 15:44:07,475 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 2 hosts
+2026-01-22 15:48:39,513 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 2 hosts
+2026-01-29 11:51:13,762 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 5 hosts
+2026-01-29 11:52:21,718 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 5 hosts
+2026-01-29 11:52:41,744 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show interface descrip'} on 5 hosts
+2026-01-29 14:43:10,088 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 5 hosts
+2026-01-29 15:39:32,445 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 1 hosts
+2026-01-29 15:40:07,795 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 1 hosts
+2026-01-29 15:42:04,610 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 5 hosts
+2026-01-29 15:44:08,805 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 5 hosts
+2026-01-29 16:15:32,006 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 1 hosts
+2026-01-29 16:16:58,092 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['show version', 'show interface description | in up']} on 1 hosts
+2026-01-29 16:17:57,727 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['show version', 'show interface description | in up']} on 1 hosts
+2026-01-29 16:18:28,357 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 1 hosts
+2026-01-29 16:18:49,874 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['show version', 'show interface description | in up']} on 5 hosts
+2026-01-29 17:03:12,517 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['show ptp status ioc-1', 'show ptp status ioc-2']} on 31 hosts
+2026-01-29 17:31:09,313 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['display version', 'display esn']} on 2 hosts
+2026-01-29 17:33:29,006 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['screen-length 0 temporary', 'display version', 'display esn']} on 2 hosts
+2026-01-30 09:03:51,527 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 1 hosts
+2026-02-03 16:57:23,662 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'disp ip vpn-instance 10150 interface'} on 1 hosts
+2026-02-03 17:02:31,364 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 1 hosts
+2026-02-03 17:06:02,740 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'disp ip vpn-instance 10150 interface'} on 345 hosts
+2026-02-03 17:11:00,180 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'disp ip vpn-instance 10150 interface'} on 345 hosts
+2026-02-03 17:14:19,287 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 345 hosts
+2026-02-11 17:46:46,293 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 1 hosts
+2026-02-11 17:47:14,123 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'show version'} on 1 hosts
+2026-04-09 17:35:25,137 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'display startup'} on 1 hosts
+2026-04-09 17:35:58,261 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 1 hosts
+2026-04-09 17:37:28,420 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['sys', 'sftp 172.19.216.125', 'y', 'y', 'C26281', 'Nini2022**', 'get NE8000-M4M8M14V800R022SPH382-C00SPC600.PAT']} on 1 hosts
