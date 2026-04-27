@@ -1,13 +1,24 @@
 [
   {
-    "ip": "10.140.142.160",
-    "alias": "AS-ARQ-Chala",
+    "ip": "10.134.50.220",
+    "alias": "rCSRLaGranjaCusco",
+    "username": "C27747",
+    "password": "IzanagI11.",
+    "port": 22,
+    "added_date": "2026-01-27 12:00:00",
+    "status": "connected",
+    "selected": false,
+    "last_connection": "2026-04-21 09:53:24"
+  },
+  {
+    "ip": "10.134.13.221",
+    "alias": "rCSRCurumuyPiura",
     "username": "C27747",
     "password": "IzanagI11.",
     "port": 22,
     "added_date": "2026-01-27 12:00:00",
     "status": "connected",
     "selected": true,
-    "last_connection": "2026-04-09 17:36:34"
+    "last_connection": "2026-04-21 10:00:47"
   }
 ]

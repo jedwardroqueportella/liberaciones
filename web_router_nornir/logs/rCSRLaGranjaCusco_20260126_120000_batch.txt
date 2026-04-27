@@ -1,0 +1,86 @@
+COMANDOS EJECUTADOS: 4
+FECHA: 2026-01-26 12:00:00
+TOTAL ROUTERS: 1
+EXITOSOS: 1 | FALLIDOS: 0
+======================================================================
+
+======================================================================
+🛜 ROUTER: rCSRLaGranjaCusco
+📍 IP: 10.134.50.220
+======================================================================
+============================================================
+COMANDO: screen-length 511 temporary
+============================================================
+screen-length 511 temporary
+Info: The configuration takes effect on the current user terminal interface only.
+<rCSRLaGranjaCusco>
+
+============================================================
+COMANDO: display version
+============================================================
+display version
+Huawei Versatile Routing Platform Software
+VRP (R) software, Version 8.220 (ATN 910C-M V800R022C00SPC600)
+Copyright (C) 2012-2022 Huawei Technologies Co., Ltd.
+HUAWEI ATN 910C-M uptime is 351 days, 20 hours, 21 minutes 
+Patch Version: V800R022SPH381
+ATN 910C-M version information:
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+CXP version information:
+CXP (Master) 2  : uptime is 351 days, 20 hours, 19 minutes
+  StartupTime   2025/05/04   13:29:38
+  SDRAM Memory Size   : 4096M bytes
+  FLASH Memory Size   : 64M bytes
+  CFCARD Memory Size  : 6703M bytes
+  ANGMHSTM0100 version information:
+  PCB         Version : ANG1CXPSS REV A
+  EPLD        Version : V120
+  FPGA        Version : V100
+  PE          Version : 000
+  BootROM     Version : 22.01
+  BootLoad    Version : 22.01
+  Software    Version : Version 8.220 RELEASE 0001
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+PWR version information: 
+PWR5's  version information:
+  PCB         Version : PDC260S12-CL REV A
+PWR6's  version information:
+  PCB         Version : PDC260S12-CL REV A
+<rCSRLaGranjaCusco>
+
+============================================================
+COMANDO: display esn
+============================================================
+display esn
+ESN of master:102366917379
+<rCSRLaGranjaCusco>
+
+============================================================
+COMANDO: display ip interface  description | in oo
+============================================================
+display ip interface  description | in oo
+Info: It will take a long time if the content you search is too much or the string you input is too long, you can press CTRL_C to break.
+Codes:
+      Ana(Analogmodem),       Asy(Async),             Cell(Cellular),
+      Dia(Dialer),            Eth(Ethernet)           GE(GigabitEthernet),
+      H(Hssi),                Ima(Ima-group),         Loop(LoopBack),
+      MTun(MTunnel),          S(Serial),              Tun(Tunnel),
+      VE(Virtual-Ethernet),   VT(Virtual-Template)
+      d(dampened),            D(down),                *D(administratively down),
+      !D(FIB overload down),  ^D(standby),            l(loopback),
+      s(spoofing),            U(up),                  E(E-Trunk down)
+------------------------------------------------------------------------------ 
+Number of interfaces whose physical status is Up: 15
+Number of interfaces whose physical status is Down: 24
+Number of interfaces whose protocol status is Up: 13
+Number of interfaces whose protocol status is Down: 26
+Interface                      IP Address/Mask    Phy  Prot Description
+Loop0                          10.134.51.227/32   U    U(s) system     
+Loop1                          10.134.50.220/32   U    U(s) loopback_gestion
+Loop1023                       128.78.228.57/16   U    U(s) DCN loopback interface
+<rCSRLaGranjaCusco>
+======================================================================
+📊 EJECUCIÓN BATCH: 4 comandos
+📈 RESULTADO: 1/1 routers exitosos
+⏰ Hora: 12:00:00
+======================================================================

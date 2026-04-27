@@ -1,0 +1,24 @@
+2026-04-21 09:53:10 - __main__ - [32m[INFO][0m - ✅ Router agregado: 10.134.50.220 (rCSRLaGranjaCusco)
+2026-04-21 09:53:24 - __main__ - [32m[INFO][0m - 🔗 Intentando conectar - connect_all=False, usuario=C27747
+2026-04-21 09:53:24 - __main__ - [32m[INFO][0m - 📦 Routers cargados: 1
+2026-04-21 09:53:24 - __main__ - [32m[INFO][0m - ✓ Routers seleccionados: 1
+2026-04-21 09:53:24 - __main__ - [32m[INFO][0m - Inventario actualizado: 1 routers con usuario C27747
+2026-04-21 09:53:24 - __main__ - [32m[INFO][0m - 📝 Archivo hosts.yml creado correctamente
+2026-04-21 09:53:24 - __main__ - [32m[INFO][0m - ⚙️ Inicializando Nornir...
+2026-04-21 09:53:24 - __main__ - [32m[INFO][0m - ✅ Nornir inicializado con 1 hosts
+2026-04-21 09:53:24 - __main__ - [32m[INFO][0m - ✅ Conexión exitosa a 1 routers
+2026-04-21 09:56:00 - __main__ - [32m[INFO][0m - Ejecutando 4 comandos en 1 routers
+2026-04-21 09:56:00 - __main__ - [32m[INFO][0m - Ejecutando 4 comandos en una sola sesión por host
+2026-04-21 09:56:12 - __main__ - [32m[INFO][0m - ✅ Éxito en rCSRLaGranjaCusco
+2026-04-21 09:56:12 - __main__ - [32m[INFO][0m - ✅ Log guardado: logs/rCSRLaGranjaCusco_20260126_120000_batch.txt
+2026-04-21 09:56:12 - __main__ - [32m[INFO][0m - Ejecución completada: 1/1 exitosos, 0 fallos
+2026-04-21 10:00:32 - __main__ - [32m[INFO][0m - ✅ Router agregado: 10.134.13.221 (rCSRCurumuyPiura)
+2026-04-21 10:00:37 - __main__ - [32m[INFO][0m - Routers seleccionados: 1
+2026-04-21 10:00:47 - __main__ - [32m[INFO][0m - 🔗 Intentando conectar - connect_all=False, usuario=C27747
+2026-04-21 10:00:47 - __main__ - [32m[INFO][0m - 📦 Routers cargados: 2
+2026-04-21 10:00:47 - __main__ - [32m[INFO][0m - ✓ Routers seleccionados: 1
+2026-04-21 10:00:47 - __main__ - [32m[INFO][0m - Inventario actualizado: 1 routers con usuario C27747
+2026-04-21 10:00:47 - __main__ - [32m[INFO][0m - 📝 Archivo hosts.yml creado correctamente
+2026-04-21 10:00:47 - __main__ - [32m[INFO][0m - ⚙️ Inicializando Nornir...
+2026-04-21 10:00:47 - __main__ - [32m[INFO][0m - ✅ Nornir inicializado con 1 hosts
+2026-04-21 10:00:47 - __main__ - [32m[INFO][0m - ✅ Conexión exitosa a 1 routers

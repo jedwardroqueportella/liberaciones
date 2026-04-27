@@ -47,3 +47,20 @@
 2026-04-09 17:35:25,137 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'display startup'} on 1 hosts
 2026-04-09 17:35:58,261 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 1 hosts
 2026-04-09 17:37:28,420 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['sys', 'sftp 172.19.216.125', 'y', 'y', 'C26281', 'Nini2022**', 'get NE8000-M4M8M14V800R022SPH382-C00SPC600.PAT']} on 1 hosts
+2026-04-10 16:53:12,565 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['check patch NE8000-M4M8M14V800R022SPH382-C00SPC600.PAT', 'y']} on 60 hosts
+2026-04-10 16:53:48,380 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 60 hosts
+2026-04-10 16:54:28,438 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['check patch NE8000-M4M8M14V800R022SPH382-C00SPC600.PAT', 'y']} on 60 hosts
+2026-04-10 16:54:53,168 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 60 hosts
+2026-04-10 16:55:29,397 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['check patch NE8000-M4M8M14V800R022SPH382-C00SPC600.PAT', 'y']} on 60 hosts
+2026-04-10 16:55:51,035 -  nornir.core -     INFO -        run() - Running task 'close_connections_task' with args {} on 60 hosts
+2026-04-10 17:08:44,709 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'check patch NE8000-M4M8M14V800R022SPH382-C00SPC600.PAT'} on 1 hosts
+2026-04-10 17:09:30,792 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['check patch NE8000-M4M8M14V800R022SPH382-C00SPC600.PAT', 'y']} on 1 hosts
+2026-04-10 17:11:04,555 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['n', 'check patch NE8000-M4M8M14V800R022SPH382-C00SPC600.PAT', 'y']} on 1 hosts
+2026-04-10 17:13:54,961 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['n', 'check patch NE8000-M4M8M14V800R022SPH382-C00SPC600.PAT', 'y']} on 60 hosts
+2026-04-10 17:30:56,955 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['n', 'check patch NE8000-M4M8M14V800R022SPH382-C00SPC600.PAT', 'y']} on 31 hosts
+2026-04-13 09:34:22,081 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'display startup'} on 59 hosts
+2026-04-13 09:39:02,087 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['screen-length 511 temporary', 'display startup']} on 59 hosts
+2026-04-13 09:40:24,987 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'display version'} on 59 hosts
+2026-04-13 09:41:39,960 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'display version'} on 1 hosts
+2026-04-13 13:32:45,163 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comando' with args {'comando': 'display version'} on 1 hosts
+2026-04-21 09:56:00,180 -  nornir.core -     INFO -        run() - Running task 'tarea_enviar_comandos_batch' with args {'commands': ['screen-length 511 temporary', 'display version', 'display esn', 'display ip interface  description | in oo']} on 1 hosts

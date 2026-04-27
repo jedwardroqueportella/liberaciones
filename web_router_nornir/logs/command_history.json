@@ -1,0 +1,26 @@
+[
+  {
+    "command": "screen-length 511 temporary",
+    "timestamp": "2026-01-26 12:00:00",
+    "routers_count": 1,
+    "user": "C27747"
+  },
+  {
+    "command": "display version",
+    "timestamp": "2026-01-26 12:00:00",
+    "routers_count": 1,
+    "user": "C27747"
+  },
+  {
+    "command": "display esn",
+    "timestamp": "2026-01-26 12:00:00",
+    "routers_count": 1,
+    "user": "C27747"
+  },
+  {
+    "command": "display ip interface  description | in oo",
+    "timestamp": "2026-01-26 12:00:00",
+    "routers_count": 1,
+    "user": "C27747"
+  }
+]
