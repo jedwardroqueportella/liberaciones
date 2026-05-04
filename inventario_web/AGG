@@ -1,0 +1,76 @@
+ASG-LIM-LosOlivos2
+system-view
+interface GigabitEthernet 0/8/2
+carrier up-hold-time 5000
+mtu 9180
+description CID 25940352 >>rCSRElSoldeNaranjal2 GI0/2/3
+undo shutdown
+set flow-stat interval 30
+control-flap
+trust upstream transporte_IPRAN_diffserv
+undo icmp name net-unreachable send
+undo icmp name host-unreachable receive
+undo icmp name protocol-unreachable receive
+undo icmp name port-unreachable send
+ospf cost 1000
+ospf network-type p2p
+ospf ldp-sync
+ospf timer ldp-sync hold-max-cost infinite
+ospf mtu-enable
+mpls
+mpls te
+mpls rsvp-te
+mpls rsvp-te hello
+mpls rsvp-te srefresh compatible
+mpls ldp
+undo dcn
+y
+mpls ldp timer hello-send 3
+mpls ldp timer keepalive-hold 45
+y
+mpls ldp timer keepalive-send 3
+port-queue be wfq weight 5 port-wred best_effort outbound
+port-queue af1 wfq weight 15 port-wred low-priority outbound
+port-queue af2 wfq weight 40 port-wred high_priority outbound
+port-queue af3 wfq weight 5 outbound
+port-queue af4 wfq weight 5 outbound
+port-queue ef pq shaping shaping-percentage 20 port-wred voice outbound
+port-queue cs6 pq shaping shaping-percentage 10 port-wred signaling outbound
+port-queue cs7 pq shaping shaping-percentage 1 port-wred signaling outbound
+statistic enable
+mpls poison-reverse enable
+#
+ospf 110
+area 5.14.1.51
+network 10.253.156.52 0.0.0.3 description to_rCSRElSoldeNaranjal2
+#
+mpls ldp
+md5-password cipher 10.253.32.220 B&k9DO%d4
+
+
+
+#
+bgp 12252
+peer 10.253.32.220 as-number 12252
+peer 10.253.32.220 group to_IPRAN_CSR
+peer 10.253.32.220 description to_rCSRElSoldeNaranjal2
+
+ipv4-family unicast
+peer 10.253.32.220 enable
+ y
+peer 10.253.32.220 group to_IPRAN_CSR
+
+ipv6-family unicast
+peer 10.253.32.220 enable
+ y
+peer 10.253.32.220 group to_IPRAN_CSR
+
+ipv4-family vpnv4
+peer 10.253.32.220 enable
+ y
+peer 10.253.32.220 group to_IPRAN_CSR
+#
+commit label Integracion_rCSRElSoldeNaranjal2
+#
+q
+save

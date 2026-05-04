@@ -1,0 +1,1193 @@
+rCSRElSoldeNaranjal2
+system-view
+ header shell information "Integrado con Plantilla Zapatreco 31-Mar-2026 Ver 07.08.23"
+header login information *********************************"EQUIPO NO LIBERADO"*****************************
+sysname rCSRElSoldeNaranjal2
+#
+interface LoopBack1
+description loopback_gestion
+ip address 10.253.0.220 255.255.255.255
+#
+interface LoopBack0
+description system
+ip address 10.253.32.220 255.255.255.255
+#
+#
+router id 10.253.32.220
+lldp enable
+#
+commit
+#
+#
+port-wred high_priority
+color green low-limit 85 high-limit 100 discard-percentage 100
+color yellow low-limit 80 high-limit 90 discard-percentage 100
+color red low-limit 75 high-limit 80 discard-percentage 100
+queue-depth 16384
+#
+port-wred low-priority
+color green low-limit 70 high-limit 100 discard-percentage 100
+color yellow low-limit 65 high-limit 90 discard-percentage 100
+color red low-limit 60 high-limit 80 discard-percentage 100
+queue-depth 16384
+#
+port-wred best_effort
+color green low-limit 50 high-limit 100 discard-percentage 100
+color yellow low-limit 40 high-limit 90 discard-percentage 100
+color red low-limit 30 high-limit 80 discard-percentage 100
+queue-depth 16384
+#
+port-wred voice
+queue-depth 4000
+#
+port-wred signaling
+queue-depth 4000
+#
+flow-wred FLOW_WRED
+color green low-limit 60 high-limit 100 discard-percentage 100
+color yellow low-limit 50 high-limit 90 discard-percentage 100
+color red low-limit 40 high-limit 80 discard-percentage 100
+queue-depth 16384
+
+commit
+#
+
+#
+#
+diffserv domain transporte_IPRAN_diffserv
+ip-dscp-inbound 12 phb af1 green
+ip-dscp-inbound 14 phb af1 green
+ip-dscp-inbound 20 phb af2 green
+ip-dscp-inbound 22 phb af2 green
+ip-dscp-inbound 26 phb af1 green
+ip-dscp-inbound 28 phb af3 green
+ip-dscp-inbound 30 phb af3 green
+ip-dscp-inbound 36 phb af4 green
+ip-dscp-inbound 38 phb af4 green
+mpls-exp-inbound 7 phb cs6 green
+mpls-exp-outbound cs7 green map 6
+mpls-exp-outbound cs7 yellow map 6
+mpls-exp-outbound cs7 red map 6
+#
+#
+diffserv domain acceso_IPRAN_diffserv
+ip-dscp-inbound 12 phb af1 green
+ip-dscp-inbound 14 phb af1 green
+ip-dscp-inbound 20 phb af2 green
+ip-dscp-inbound 22 phb af2 green
+ip-dscp-inbound 26 phb af1 green
+ip-dscp-inbound 28 phb af3 green
+ip-dscp-inbound 30 phb af3 green
+ip-dscp-inbound 36 phb af4 green
+ip-dscp-inbound 38 phb af4 green
+mpls-exp-inbound 7 phb cs6 green
+mpls-exp-outbound cs7 green map 6
+mpls-exp-outbound cs7 yellow map 6
+mpls-exp-outbound cs7 red map 6
+#
+#
+traffic classifier CoS_be operator or
+if-match dscp default
+
+#
+traffic classifier CoS_af1 operator or
+if-match dscp cs1
+if-match dscp af11
+if-match dscp af12
+if-match dscp af13
+#
+traffic classifier CoS_af2 operator or
+if-match dscp cs2
+if-match dscp af21
+if-match dscp af22
+if-match dscp af23
+#
+traffic classifier CoS_af3 operator or
+if-match dscp cs3
+if-match dscp af31
+if-match dscp af32
+if-match dscp af33
+#
+traffic classifier CoS_af4 operator or
+if-match dscp cs4
+if-match dscp af41
+if-match dscp af42
+if-match dscp af43
+#
+traffic classifier CoS_ef operator or
+if-match dscp cs5
+if-match dscp ef
+#
+traffic classifier CoS_cs6 operator or
+if-match dscp cs6
+#
+traffic classifier CoS_cs7 operator or
+if-match dscp cs7
+#
+traffic behavior statistics
+permit
+#
+traffic policy statistics
+undo share-mode
+statistics enable
+classifier CoS_be behavior statistics precedence 1
+classifier CoS_af1 behavior statistics precedence 2
+classifier CoS_af2 behavior statistics precedence 3
+classifier CoS_af3 behavior statistics precedence 4
+classifier CoS_af4 behavior statistics precedence 5
+classifier CoS_ef behavior statistics precedence 6
+classifier CoS_cs6 behavior statistics precedence 7
+classifier CoS_cs7 behavior statistics precedence 8
+#
+
+commit
+#
+traffic behavior 309-cs6_IN
+service-class cs6 color green
+car cir 8000 pir 8000
+#
+traffic behavior 309-ef_IN
+service-class ef color green
+car cir 15000 pir 15000
+#
+traffic behavior 309-af2_IN
+service-class af2 color green
+car cir 2000 pir 1000000
+#
+traffic behavior 309-af1_IN
+service-class af1 color green
+car cir 25000 pir 1000000
+#
+traffic behavior 309-be_IN
+service-class be color green
+car cir 1000 pir 1000000
+#
+traffic behavior 307-cs6_IN
+service-class cs6 color green
+car cir 20000 pir 20000
+#
+traffic behavior 307-ef_IN
+service-class ef color green
+car cir 20000 pir 20000
+#
+traffic behavior 307-af4_IN
+service-class af4 color green
+car cir 4000 pir 1000000
+#
+traffic behavior 307-af2_IN
+service-class af2 color green
+car cir 4000 pir 1000000
+#
+traffic behavior 307-af1_IN
+service-class af1 color green
+car cir 52000 pir 1000000
+#
+traffic behavior 307-be_IN
+service-class be color green
+car cir 1000 pir 1000000
+#
+#
+traffic behavior 319-cs6_IN
+service-class cs6 color green
+car cir 10000 pir 10000
+#
+#
+traffic behavior 328-cs7_IN
+service-class cs7 color green
+car cir 10000 pir 10000
+#
+traffic behavior 328-cs6_IN
+service-class cs6 color green
+car cir 40000 pir 40000
+#
+traffic behavior 328-ef_IN
+service-class ef color green
+car cir 40000 pir 40000
+#
+traffic behavior 328-af4_IN
+service-class af4 color green
+car cir 10000 pir 1000000
+#
+traffic behavior 328-af2_IN
+service-class af2 color green
+car cir 200000 pir 1000000
+#
+traffic behavior 328-af1_IN
+service-class af1 color green
+car cir 520000 pir 1000000
+#
+traffic behavior 328-be_IN
+service-class be color green
+car cir 5000 pir 1000000
+#
+#
+traffic behavior 317-ef_IN
+service-class ef color green
+car cir 5000 pir 5000
+#
+#
+traffic behavior 316-af2_IN
+service-class af2 color green
+car cir 10000 pir 10000
+#
+#
+traffic behavior IPRAN_311_IN
+car cir 2000 pir 1000000
+#
+#
+#
+#
+flow-queue IPRAN_309_OUT
+queue be wfq weight 1 flow-wred FLOW_WRED
+queue af1 wfq weight 8 flow-wred FLOW_WRED
+queue af2 wfq weight 10 flow-wred FLOW_WRED
+queue ef pq shaping 15000
+queue cs6 pq shaping 8000
+#
+flow-queue IPRAN_307_OUT
+queue be wfq weight 1 flow-wred FLOW_WRED
+queue af1 wfq weight 8 flow-wred FLOW_WRED
+queue af2 wfq weight 10 flow-wred FLOW_WRED
+queue af4 wfq weight 10 flow-wred FLOW_WRED
+queue ef pq shaping 20000
+queue cs6 pq shaping 20000
+#
+flow-queue IPRAN_319_OUT
+queue cs6 pq shaping 10000
+#
+flow-queue IPRAN_328_OUT
+queue be wfq weight 8 flow-wred FLOW_WRED
+queue af1 wfq weight 60 flow-wred FLOW_WRED
+queue af2 wfq weight 10 flow-wred FLOW_WRED
+queue af4 wfq weight 10 flow-wred FLOW_WRED
+queue ef pq shaping 40000
+queue cs6 pq shaping 40000
+queue cs7 pq shaping 10000
+#
+flow-queue 328-10G-OUT
+queue be wfq weight 8 flow-wred FLOW_WRED
+queue af1 wfq weight 10 flow-wred FLOW_WRED
+queue af2 wfq weight 70 flow-wred FLOW_WRED
+queue af4 wfq weight 10 flow-wred FLOW_WRED
+queue ef pq shaping 75000
+queue cs6 pq shaping 75000
+queue cs7 pq shaping 10000
+#
+flow-queue IPRAN_317_OUT
+queue ef pq shaping 5000
+#
+flow-queue IPRAN_316_OUT
+queue af2 wfq weight 10 flow-wred FLOW_WRED
+#
+flow-queue IPRAN_311_OUT
+queue be wfq weight 1 flow-wred FLOW_WRED
+queue af2 wfq weight 10 flow-wred FLOW_WRED
+#
+#
+#
+qos-profile 309-out
+user-queue cir 50000 pir 1000000 flow-queue IPRAN_309_OUT
+#
+qos-profile 307-out
+user-queue cir 100000 pir 1000000 flow-queue IPRAN_307_OUT
+#
+qos-profile 319-out
+user-queue cir 10000 pir 10000 flow-queue IPRAN_319_OUT
+#
+qos-profile 328-out
+user-queue cir 825000 pir 1000000 flow-queue IPRAN_328_OUT
+#
+qos-profile 328-10g-out
+user-queue cir 8000000 pir 10000000 flow-queue 328-10G-OUT
+#
+qos-profile 317-out
+user-queue cir 5000 pir 5000 flow-queue IPRAN_317_OUT
+#
+qos-profile 316-out
+user-queue cir 10000 pir 10000 flow-queue IPRAN_316_OUT
+#
+#
+flow-queue gestion_out
+queue cs6 pq shaping 2000
+#
+qos-profile gestion_out
+user-queue cir 2000 pir 10000 flow-queue gestion_out
+#
+flow-queue gestion_seguridad_out
+queue af4 pq shaping 5000
+#
+qos-profile gestion_seguridad_out
+user-queue cir 5000 pir 10000 flow-queue gestion_seguridad_out
+#
+
+diffserv domain diffserv_Claro_Access
+ip-dscp-inbound 48 phb ef green
+commit
+
+#
+#
+#
+#
+#
+#
+#
+#
+
+#
+#
+
+commit
+
+#
+ip ip-prefix system index 10 permit 10.253.32.220 32
+ip ip-prefix loopback_gestion index 10 permit 10.253.0.220 32
+#
+#
+ip community-filter basic NORTE-CORE index 10 permit 12252:65000
+ip community-filter basic NORTE-CORE index 20 permit 12252:65002
+#
+ip community-filter basic LIMA-CORE index 10 permit 12252:65000
+ip community-filter basic LIMA-CORE index 20 permit 12252:65001
+#
+ip community-filter basic SUR-CORE index 10 permit 12252:65000
+ip community-filter basic SUR-CORE index 20 permit 12252:65003
+#
+ip community-filter basic CENTRO-CORE index 10 permit 12252:65000
+ip community-filter basic CENTRO-CORE index 20 permit 12252:65004
+#
+#
+ip ip-prefix Redes_ABIS index 10 permit 3.3.3.3 32
+ip ip-prefix Redes_ABIS index 20 permit 10.95.28.160 27 greater-equal 27 less-equal 32
+ip ip-prefix Redes_ABIS index 30 permit 10.95.70.64 27 greater-equal 27 less-equal 32
+ip ip-prefix Redes_ABIS index 40 permit 10.95.71.128 27 greater-equal 27 less-equal 32
+ip ip-prefix Redes_ABIS index 50 permit 10.95.74.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 60 permit 10.95.75.32 27 greater-equal 27 less-equal 32
+ip ip-prefix Redes_ABIS index 70 permit 10.95.78.32 27 greater-equal 27 less-equal 32
+ip ip-prefix Redes_ABIS index 80 permit 10.95.210.72 29 greater-equal 29 less-equal 32
+ip ip-prefix Redes_ABIS index 90 permit 10.95.210.136 29 greater-equal 29 less-equal 32
+ip ip-prefix Redes_ABIS index 100 permit 10.95.210.192 29 greater-equal 29 less-equal 32
+ip ip-prefix Redes_ABIS index 110 permit 10.95.212.0 29 greater-equal 29 less-equal 32
+ip ip-prefix Redes_ABIS index 120 permit 10.95.255.100 30 greater-equal 30 less-equal 32
+ip ip-prefix Redes_ABIS index 130 permit 10.101.0.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 140 permit 10.101.1.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 150 permit 10.101.2.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 160 permit 10.101.3.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 170 permit 10.101.4.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 180 permit 10.101.5.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 190 permit 10.101.6.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 200 permit 10.101.7.128 30 greater-equal 30 less-equal 32
+ip ip-prefix Redes_ABIS index 210 permit 10.101.8.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 220 permit 10.101.9.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 230 permit 10.101.11.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 240 permit 10.101.12.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 250 permit 10.101.13.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 260 permit 10.101.14.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 270 permit 10.103.6.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 280 permit 10.252.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix Redes_ABIS index 290 permit 172.16.108.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 300 permit 192.168.100.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_ABIS index 310 permit 10.165.224.37 32
+ip ip-prefix Redes_ABIS index 320 permit 10.165.175.152 32
+ip ip-prefix Redes_ABIS index 330 permit 172.29.218.24 32
+ip ip-prefix Redes_ABIS index 340 permit 172.29.250.24 32
+ip ip-prefix Redes_ABIS index 350 permit 10.96.210.0 25 greater-equal 25 less-equal 32
+ip ip-prefix Redes_ABIS index 360 permit 10.96.210.128 25 greater-equal 25 less-equal 32
+ip ip-prefix Redes_ABIS index 370 permit 10.95.103.196 26 greater-equal 26 less-equal 32
+ip ip-prefix Redes_ABIS index 380 permit 10.96.210.0 24 greater-equal 24 less-equal 32
+#
+ip ip-prefix pfx_BTS_ABIS index 10 permit 10.43.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix pfx_BTS_ABIS index 20 permit 10.120.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix pfx_BTS_ABIS index 30 permit 10.148.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix pfx_BTS_ABIS index 40 permit 10.150.0.0 16 greater-equal 16 less-equal 32
+#
+#
+ip extcommunity-filter basic vpn_ABIS permit rt 27702:800
+#
+#
+ip ip-prefix Red_IPRAN_reject index 10 permit 10.110.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix Red_IPRAN_reject index 20 permit 10.140.0.0 17 greater-equal 17 less-equal 32
+ip ip-prefix Red_IPRAN_reject index 30 permit 10.141.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix Red_IPRAN_reject index 40 permit 10.146.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix Red_IPRAN_reject index 50 permit 172.16.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix Red_IPRAN_reject index 60 permit 172.27.0.0 16 greater-equal 16 less-equal 32
+#
+ip ip-prefix Red_netact index 10 permit 172.16.108.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Red_netact index 20 permit 172.17.31.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Red_netact index 30 permit 10.165.224.8 30 greater-equal 30 less-equal 32
+ip ip-prefix Red_netact index 40 permit 10.165.175.136 29 greater-equal 29 less-equal 32
+ip ip-prefix Red_netact index 50 permit 172.29.218.8 29 greater-equal 29 less-equal 32
+ip ip-prefix Red_netact index 60 permit 172.29.250.8 29 greater-equal 29 less-equal 32
+ip ip-prefix Red_netact index 70 permit 10.165.224.24 29 greater-equal 29 less-equal 32
+ip ip-prefix Red_netact index 80 permit 10.165.224.32 30 greater-equal 30 less-equal 32
+ip ip-prefix Red_netact index 90 permit 10.165.175.156 30 greater-equal 30 less-equal 32
+ip ip-prefix Red_netact index 100 permit 10.165.175.160 30 greater-equal 30 less-equal 32
+ip ip-prefix Red_netact index 110 permit 172.29.218.24 29 greater-equal 29 less-equal 32
+ip ip-prefix Red_netact index 120 permit 172.29.218.32 32
+ip ip-prefix Red_netact index 130 permit 172.29.250.28 30 greater-equal 30 less-equal 32
+ip ip-prefix Red_netact index 140 permit 172.29.250.32 32
+#
+ip ip-prefix Red_Sync index 10 permit 10.95.28.112 28 greater-equal 28 less-equal 32
+ip ip-prefix Red_Sync index 20 permit 10.95.71.96 27 greater-equal 27 less-equal 32
+ip ip-prefix Red_Sync index 30 permit 10.95.75.168 29 greater-equal 29 less-equal 32
+ip ip-prefix Red_Sync index 40 permit 10.95.76.8 29 greater-equal 29 less-equal 32
+ip ip-prefix Red_Sync index 50 permit 10.95.76.24 29 greater-equal 29 less-equal 32
+ip ip-prefix Red_Sync index 60 permit 10.95.76.40 29 greater-equal 29 less-equal 32
+ip ip-prefix Red_Sync index 70 permit 10.95.77.8 29 greater-equal 29 less-equal 32
+ip ip-prefix Red_Sync index 80 permit 10.95.77.24 29 greater-equal 29 less-equal 32
+ip ip-prefix Red_Sync index 90 permit 10.95.77.72 29 greater-equal 29 less-equal 32
+ip ip-prefix Red_Sync index 100 permit 10.95.78.168 29 greater-equal 29 less-equal 32
+ip ip-prefix Red_Sync index 110 permit 192.168.100.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Red_Sync index 120 permit 10.95.77.128 28 greater-equal 28 less-equal 32
+#
+#
+ip extcommunity-filter basic vpn_IPRAN permit rt 27702:700
+ip extcommunity-filter basic vpn_netact permit rt 27702:600
+ip extcommunity-filter basic vpn_Abis permit rt 27702:600
+#
+commit
+#
+ip ip-prefix Redes_MME index 10 permit 10.95.255.104 30 greater-equal 30 less-equal 32
+ip ip-prefix Redes_MME index 20 permit 10.96.90.114 32
+ip ip-prefix Redes_MME index 30 permit 10.96.90.115 32
+ip ip-prefix Redes_MME index 40 permit 10.128.50.0 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_MME index 50 permit 10.128.50.128 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_MME index 60 permit 10.128.66.0 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_MME index 70 permit 10.128.66.128 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_MME index 80 permit 10.128.82.0 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_MME index 90 permit 10.128.90.0 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_MME index 100 permit 10.128.98.0 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_MME index 110 permit 10.128.106.0 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_MME index 120 permit 10.129.98.1 32
+ip ip-prefix Redes_MME index 130 permit 10.96.98.1 32
+ip ip-prefix Redes_MME index 140 permit 10.96.106.1 32
+ip ip-prefix Redes_MME index 150 permit 10.165.224.24 32
+ip ip-prefix Redes_MME index 160 permit 10.165.175.166 32
+ip ip-prefix Redes_MME index 170 permit 172.29.218.28 32
+ip ip-prefix Redes_MME index 180 permit 172.29.250.9 32
+ip ip-prefix Redes_MME index 190 permit 172.29.250.28 32
+ip ip-prefix Redes_MME index 200 permit 10.165.224.40 32
+ip ip-prefix Redes_MME index 210 permit 10.96.226.0 24 greater-equal 24 less-equal 32
+#
+#
+ip extcommunity-filter basic vpn_S1-MME permit rt 12252:10094
+#
+#
+ip ip-prefix Redes_eNBs index 10 permit 10.180.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix Redes_eNBs index 20 permit 10.193.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix Redes_eNBs index 30 permit 10.194.0.0 16 greater-equal 16 less-equal 32
+#
+#
+ip ip-prefix Redes_S1-U_Core index 10 permit 10.95.255.104 30 greater-equal 30 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 20 permit 10.96.79.13 32
+ip ip-prefix Redes_S1-U_Core index 30 permit 10.96.80.112 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 40 permit 10.96.90.128 27 greater-equal 27 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 50 permit 10.128.49.32 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 60 permit 10.128.50.64 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 70 permit 10.128.50.144 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 80 permit 10.128.66.64 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 90 permit 10.128.66.144 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 100 permit 10.128.82.64 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 110 permit 10.128.90.64 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 120 permit 10.128.98.64 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 130 permit 10.128.106.64 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 140 permit 10.96.98.64 29 greater-equal 29 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 150 permit 10.96.106.64 29 greater-equal 29 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 160 permit 10.165.224.112 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 170 permit 10.165.224.128 27 greater-equal 27 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 180 permit 10.165.175.240 28 greater-equal 28 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 190 permit 10.165.181.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 200 permit 172.29.218.96 27 greater-equal 27 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 210 permit 172.29.250.96 27 greater-equal 27 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 220 permit 10.98.228.0 22 greater-equal 22 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 230 permit 10.98.234.0 23 greater-equal 23 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 240 permit 10.98.238.0 23 greater-equal 23 less-equal 32
+ip ip-prefix Redes_S1-U_Core index 250 permit 10.246.0.0 16 greater-equal 16 less-equal 32
+#
+
+#
+#
+ip extcommunity-filter basic vpn_S1-U_Access permit rt 12252:10091
+ip extcommunity-filter basic vpn_S1-U permit rt 12252:10085
+#
+#
+ip ip-prefix Redes_Sync index 10 permit 10.95.210.80 29 greater-equal 29 less-equal 32
+ip ip-prefix Redes_Sync index 20 permit 10.95.210.144 29 greater-equal 29 less-equal 32
+ip ip-prefix Redes_Sync index 30 permit 10.95.210.208 29 greater-equal 29 less-equal 32
+ip ip-prefix Redes_Sync index 40 permit 10.95.212.16 29 greater-equal 29 less-equal 32
+ip ip-prefix Redes_Sync index 50 permit 10.252.0.0 16 greater-equal 28 less-equal 29
+#
+#
+ip extcommunity-filter basic vpn_syncptp permit rt 12252:10092
+#
+#
+ip ip-prefix Red_Gestion_eNB index 10 permit 10.192.16.0 22 greater-equal 22 less-equal 32
+ip ip-prefix Red_Gestion_eNB index 20 permit 172.16.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix Red_Gestion_eNB index 30 permit 172.17.31.0 24 greater-equal 24 less-equal 32
+ip ip-prefix Red_Gestion_eNB index 40 permit 172.19.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix Red_Gestion_eNB index 50 permit 172.22.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix Red_Gestion_eNB index 60 permit 192.168.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix Red_Gestion_eNB index 70 permit 10.96.210.0 24 greater-equal 24 less-equal 32
+#
+#
+ip extcommunity-filter basic vpn_Mngmt permit rt 12252:10093
+#
+#
+ip ip-prefix pfx_Gestion_Energia_NOC_Seg index 10 permit 10.95.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix pfx_Gestion_Energia_NOC_Seg index 20 permit 10.96.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix pfx_Gestion_Energia_NOC_Seg index 30 permit 10.99.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix pfx_Gestion_Energia_NOC_Seg index 40 permit 10.128.169.0 24 greater-equal 24 less-equal 32
+ip ip-prefix pfx_Gestion_Energia_NOC_Seg index 50 permit 10.235.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix pfx_Gestion_Energia_NOC_Seg index 60 permit 172.16.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix pfx_Gestion_Energia_NOC_Seg index 70 permit 172.17.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix pfx_Gestion_Energia_NOC_Seg index 80 permit 172.19.0.0 16 greater-equal 16 less-equal 32
+ip ip-prefix pfx_Gestion_Energia_NOC_Seg index 90 permit 172.22.0.0 16 greater-equal 16 less-equal 32
+
+#
+ip extcommunity-filter basic vpn_VRF10050 permit rt 12252:10050
+#
+
+
+
+
+
+
+
+
+
+
+#
+
+
+#
+
+
+
+
+#
+commit
+#
+route-policy export_IPv4&Label_IPv4unicast permit node 10
+if-match ip-prefix system
+apply community 12252:65001 additive
+apply mpls-label
+#
+route-policy export_IPv4&Label_IPv4unicast permit node 20
+if-match ip-prefix loopback_gestion
+apply community 12252:65010 additive
+apply mpls-label
+#
+route-policy export_IPv4&Label_IPv4unicast permit node 1000
+
+#
+route-policy export_IPv6&Label permit node 10
+apply mpls-label
+#
+#
+route-policy Import_pfx_ABIS_Access_BTS permit node 10
+if-match ip-prefix Redes_ABIS
+if-match extcommunity-filter vpn_ABIS
+#
+route-policy Import_pfx_ABIS_Access_BTS deny node 1000
+#
+route-policy Export_pfx_ABIS_Access_BTS permit node 10
+if-match ip-prefix pfx_BTS_ABIS
+apply extcommunity rt 27702:800 rt 12252:10095
+#
+route-policy Export_pfx_ABIS_Access_BTS deny node 1000
+#
+#
+route-policy import-IPRAN deny node 10
+if-match ip-prefix Red_IPRAN_reject
+if-match extcommunity-filter vpn_IPRAN
+#
+route-policy import-IPRAN permit node 20
+if-match extcommunity-filter vpn_IPRAN
+#
+route-policy import-IPRAN permit node 30
+if-match ip-prefix Red_netact
+if-match extcommunity-filter vpn_netact
+#
+route-policy import-IPRAN permit node 40
+if-match ip-prefix Red_Sync
+if-match extcommunity-filter vpn_Abis
+#
+route-policy import-IPRAN deny node 1000
+#
+#
+route-policy Import_pfx_S1-MME_Access_eNB permit node 10
+if-match ip-prefix Redes_MME
+if-match extcommunity-filter vpn_S1-MME
+#
+route-policy Import_pfx_S1-MME_Access_eNB deny node 1000
+#
+#
+route-policy Import_pfx_S1-U_Access_eNB permit node 10
+if-match ip-prefix Redes_eNBs
+if-match extcommunity-filter vpn_S1-U_Access
+#
+route-policy Import_pfx_S1-U_Access_eNB permit node 20
+if-match ip-prefix Redes_S1-U_Core
+if-match extcommunity-filter vpn_S1-U
+#
+route-policy Import_pfx_S1-U_Access_eNB deny node 1000
+#
+#
+route-policy Import_pfx_eNB_Syncptp permit node 10
+if-match ip-prefix Redes_Sync
+if-match extcommunity-filter vpn_syncptp
+#
+route-policy Import_pfx_eNB_Syncptp deny node 1000
+#
+#
+route-policy Import_pfx_Mngmt_eNB permit node 10
+if-match ip-prefix Red_Gestion_eNB
+if-match extcommunity-filter vpn_Mngmt
+#
+route-policy Import_pfx_Mngmt_eNB deny node 1000
+#
+#
+route-policy import_vpn_VRF10050_V1 permit node 10
+if-match ip-prefix pfx_Gestion_Energia_NOC_Seg
+if-match extcommunity-filter vpn_VRF10050
+#
+route-policy import_vpn_VRF10050_V1 deny node 1000
+#
+
+
+
+
+
+
+
+
+
+
+
+
+#
+
+
+
+commit
+#
+ip vpn-instance 10095
+description VPN Acceso BTS 2G a VPN ABIS
+ipv4-family
+route-distinguisher 12252:10095
+import route-policy Import_pfx_ABIS_Access_BTS
+export route-policy Export_pfx_ABIS_Access_BTS
+vpn-target 12252:10095 import-extcommunity
+vpn-target 27702:800 import-extcommunity
+vpn-target 12252:10095 export-extcommunity
+vpn-target 27702:800 export-extcommunity
+#
+#
+ip vpn-instance 700
+description IPRAN
+ipv4-family
+route-distinguisher 27702:700
+import route-policy import-IPRAN
+
+vpn-target 27702:700 import-extcommunity
+vpn-target 27702:600 import-extcommunity
+vpn-target 27702:800 import-extcommunity
+vpn-target 27702:700 export-extcommunity
+#
+#
+ip vpn-instance 10090
+description VPN Signaling S1-MME-Access:eNB to MME
+ipv4-family
+route-distinguisher 12252:10090
+import route-policy Import_pfx_S1-MME_Access_eNB
+vpn-target 12252:10090 export-extcommunity
+vpn-target 12252:10094 export-extcommunity
+vpn-target 12252:10090 import-extcommunity
+vpn-target 12252:10094 import-extcommunity
+#
+#
+ip vpn-instance 10091
+description VPN User Plane, Handover, S1-U, X2:eNB to eNB, eNB to S-GW
+ipv4-family
+route-distinguisher 12252:10091
+import route-policy Import_pfx_S1-U_Access_eNB
+vpn-target 12252:10091 export-extcommunity
+vpn-target 12252:10085 export-extcommunity
+vpn-target 12252:10091 import-extcommunity
+vpn-target 12252:10085 import-extcommunity
+#
+#
+ip vpn-instance 10092
+description VPN Sincronismo Trafico eNB
+ipv4-family
+route-distinguisher 12252:10092
+import route-policy Import_pfx_eNB_Syncptp
+vpn-target 12252:10092 import-extcommunity
+vpn-target 12252:10092 export-extcommunity
+#
+#
+ip vpn-instance 10093
+description Gestion eNB O&M
+ipv4-family
+route-distinguisher 12252:10093
+import route-policy Import_pfx_Mngmt_eNB
+vpn-target 12252:10093 import-extcommunity
+vpn-target 12252:10093 export-extcommunity
+#
+#
+ip vpn-instance 10050
+description VPN_GestionUM
+ipv4-family
+route-distinguisher 12252:10050
+import route-policy import_vpn_VRF10050_V1
+vpn-target 12252:10050 import-extcommunity
+vpn-target 12252:10050 export-extcommunity
+#
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+license
+active port-basic slot 2 port 3
+#
+bfd
+mpls-passive
+#
+commit
+#
+mpls lsr-id 10.253.32.220
+#
+#
+mpls
+mpls te
+mpls rsvp-te
+mpls rsvp-te hello
+mpls rsvp-te srefresh
+mpls te cspf
+mpls bfd enable
+mpls bfd-trigger host
+mpls bfd min-tx-interval 100 min-rx-interval 100
+#
+mpls ldp
+backoff timer 5 10
+graceful-restart
+y
+graceful-restart timer reconnect 120
+y
+session protection duration infinite
+md5-password cipher LDP_PEER_LOOPBACK B&k9DO%d4
+accept target-hello all
+send-message address all-loopback
+ipv4-family
+#
+commit
+#
+interface GigabitEthernet 0/2/3
+trust upstream transporte_IPRAN_diffserv
+description IDE 770941 CID 25940352 LI1264 CLARO PERU INTERFACE_DESC_HOSTNAME INTERFACE_DESC_PORT
+mtu 9180
+set flow-stat interval 30
+control-flap
+undo icmp name net-unreachable send
+undo icmp name host-unreachable receive
+undo icmp name protocol-unreachable receive
+undo icmp name port-unreachable send
+undo dcn
+y
+undo shutdown
+trust upstream transporte_IPRAN_diffserv
+ port-queue be wfq weight 5 port-wred best_effort outbound
+port-queue af1 wfq weight 15 port-wred low-priority outbound
+port-queue af2 wfq weight 40 port-wred high_priority outbound
+port-queue af3 wfq weight 5 outbound
+port-queue af4 wfq weight 5 outbound
+port-queue ef pq shaping shaping-percentage 20 port-wred voice outbound
+port-queue cs6 pq shaping shaping-percentage 10 port-wred signaling outbound
+port-queue cs7 pq shaping shaping-percentage 1 port-wred signaling outbound
+ospf cost 1000
+ospf network-type p2p
+ospf ldp-sync
+ospf timer ldp-sync hold-max-cost infinite
+ospf mtu-enable
+mpls
+mpls te
+mpls rsvp-te
+mpls rsvp-te hello
+mpls rsvp-te srefresh compatible
+mpls ldp
+mpls ldp timer hello-send 3
+mpls ldp timer keepalive-hold 45
+y
+mpls ldp timer keepalive-send 3
+mpls poison-reverse enable
+statistic enable
+#
+#
+
+
+ospf 110
+bfd all-interfaces enable
+bfd all-interfaces min-tx-interval 100 min-rx-interval 100
+silent-interface all
+y
+undo silent-interface GigabitEthernet 0/2/3
+preference 110
+preference ase 110
+spf-schedule-interval intelligent-timer 1000 100 200
+lsa-originate-interval intelligent-timer 200 50 50
+lsa-arrival-interval intelligent-timer 200 50 50
+bandwidth-reference 100000
+area 5.14.1.51
+authentication-mode md5 1 cipher B&k9DO%d4
+network 10.253.32.220 0.0.0.0 description Loopback System
+network 10.253.0.220 0.0.0.0 description Loopback Gestion
+network 10.253.156.52 0.0.0.3 description WAN
+#
+commit
+#
+bgp 12252
+router-id 10.253.32.220
+undo default ipv4-unicast
+graceful-restart
+Y
+group to_IPRAN_ASG internal
+peer to_IPRAN_ASG connect-interface LoopBack0
+peer to_IPRAN_ASG password cipher B&k9DO%d4
+peer to_IPRAN_ASG bfd enable
+peer 10.140.132.58 as-number 12252
+peer 10.140.132.58 group to_IPRAN_ASG
+peer 10.140.132.58 description to_ASG-LIM-LosOlivos2
+
+ipv4-family unicast
+undo synchronization
+reflect change-path-attribute
+preference 20 200 200
+import-route direct
+import-route static
+maximum load-balancing 2
+auto-frr
+ingress-lsp protect-mode bgp-frr
+bestroute nexthop-resolved tunnel
+peer to_IPRAN_ASG enable 
+peer to_IPRAN_ASG route-policy export_IPv4&Label_IPv4unicast export 
+peer to_IPRAN_ASG next-hop-local 
+peer to_IPRAN_ASG label-route-capability 
+peer to_IPRAN_ASG advertise-community 
+peer to_IPRAN_ASG advertise-ext-community 
+peer 10.140.132.58 enable
+y
+peer 10.140.132.58 group to_IPRAN_ASG
+
+ipv6-family unicast
+undo synchronization
+reflect change-path-attribute
+preference 20 200 200
+import-route direct
+import-route static
+peer to_IPRAN_ASG enable 
+peer to_IPRAN_ASG route-policy export_IPv6&Label export 
+peer to_IPRAN_ASG next-hop-local 
+peer to_IPRAN_ASG label-route-capability
+peer to_IPRAN_ASG advertise-community 
+peer to_IPRAN_ASG advertise-ext-community 
+peer 10.140.132.58 enable
+y
+peer 10.140.132.58 group to_IPRAN_ASG
+
+ipv4-family vpnv4
+policy vpn-target
+bestroute nexthop-resolved tunnel
+peer to_IPRAN_ASG enable 
+peer to_IPRAN_ASG next-hop-local 
+peer to_IPRAN_ASG advertise-community 
+peer 10.140.132.58 enable
+y
+peer 10.140.132.58 group to_IPRAN_ASG
+
+ipv4-family vpn-instance 10095
+preference 20 200 200
+import-route direct
+import-route static
+ipv4-family vpn-instance 700
+preference 20 200 200
+import-route direct
+import-route static
+ipv4-family vpn-instance 10090
+preference 20 200 200
+import-route direct
+ipv4-family vpn-instance 10091
+preference 20 200 200
+import-route direct
+ipv4-family vpn-instance 10092
+preference 20 200 200
+import-route direct
+ipv4-family vpn-instance 10093
+preference 20 200 200
+import-route direct
+ipv4-family vpn-instance 10050
+preference 20 200 200
+import-route direct
+import-route static
+
+
+
+#
+
+
+
+commit
+#
+acl number 2000
+rule 10 permit source 172.19.212.0 0.0.0.255
+rule 50 permit source 172.19.216.0 0.0.0.255
+rule 100 permit source 10.192.17.0 0.0.0.255
+rule 110 permit source 10.96.209.0 0.0.0.255
+rule 1000 deny
+#
+acl number 2001
+rule 10 permit source 172.19.212.0 0.0.0.255
+rule 50 permit source 172.19.216.0 0.0.0.255
+rule 60 permit source 10.96.209.64 0.0.0.63
+rule 70 permit source 10.96.209.192 0.0.0.63
+rule 100 permit source 10.192.16.0 0.0.3.255
+rule 150 permit source 10.235.0.0 0.0.255.255
+rule 200 permit source 10.253.156.52 0.0.0.3
+rule 1000 deny
+#
+#
+stelnet server enable
+undo telnet server enable 
+y
+undo ftp server enable
+y
+
+snetconf server enable
+ssh authentication-type default password
+ssh server acl 2001
+ssh authorization-type default aaa
+ssh client first-time enable
+ssh server cipher aes256_ctr aes128_ctr aes256_cbc aes128_cbc 3des_cbc
+ssh server hmac sha2_256 sha1
+ssh server key-exchange dh_group_exchange_sha256 dh_group_exchange_sha1 dh_group14_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521 sm2_kep
+ssh server-source all-interface
+y
+ssh ipv6 server-source all-interface
+y
+#
+
+ftp client-source -i LoopBack1
+sftp client-source -i LoopBack1
+sftp server enable
+#
+commit
+#
+command-privilege level rearrange
+command-privilege level 1 view global display cpu
+command-privilege level 1 view global display cpu-monitor
+command-privilege level 1 view global display current-configuration
+command-privilege level 1 view global display event
+command-privilege level 1 view global display info-center
+command-privilege level 1 view shell display inventory
+command-privilege level 1 view global display logbuffer
+command-privilege level 1 view global display logfile
+command-privilege level 1 view global display memory-monitor
+command-privilege level 1 view global display saved-configuration
+command-privilege level 1 view global display scp-client
+command-privilege level 1 view global display security
+command-privilege level 1 view global display sftp-client
+command-privilege level 1 view global display snmp-agent
+command-privilege level 1 view global display ssh
+command-privilege level 1 view global display task
+command-privilege level 1 view global display task-group
+command-privilege level 1 view global display telnet
+command-privilege level 1 view global display telnet-client
+command-privilege level 1 view global display tftp-client
+command-privilege level 1 view global display trapbuffer
+command-privilege level 1 view shell display upgrade
+command-privilege level 1 view global display user-interface
+#
+ssh client first-time enable
+#
+hwtacacs-server template claro_aaa
+hwtacacs-server authentication 172.19.216.46
+hwtacacs-server authentication 172.19.216.42 secondary
+hwtacacs-server authorization 172.19.216.46
+hwtacacs-server authorization 172.19.216.42 secondary
+hwtacacs-server accounting 172.19.216.46
+hwtacacs-server accounting 172.19.216.42 secondary
+hwtacacs-server source-ip 10.253.0.220
+hwtacacs-server shared-key cipher ciscoman
+hwtacacs-server user-name original
+#
+
+
+
+aaa
+local-user acdclaro password irreversible-cipher T3mporal2mil*
+local-user acdclaro service-type ftp ssh
+local-user acdclaro level 15
+local-user acdclaro state block fail-times 3 interval 5
+local-user acdclaro ftp-directory cfcard:/
+local-user acdclaro user-group manage-ug
+
+undo local-user root    
+authentication-scheme hwtacacs
+authentication-mode local hwtacacs
+authorization-scheme hwtacacs
+authorization-mode local hwtacacs
+accounting-scheme hwtacacs
+accounting-mode hwtacacs
+domain default_admin
+authentication-scheme hwtacacs
+authorization-scheme hwtacacs
+accounting-scheme hwtacacs
+hwtacacs-server claro_aaa
+recording-scheme hwtacacs
+recording-mode hwtacacs claro_aaa
+system recording-scheme hwtacacs
+outbound recording-scheme hwtacacs
+cmd recording-scheme hwtacacs
+#
+commit
+#
+info-center loghost source Loopback 1
+info-center loghost 172.19.216.31 local-time
+info-center loghost 172.19.216.52 local-time
+info-center loghost 172.19.216.60 local-time
+info-center loghost 172.19.216.61 local-time
+#
+#
+ntp-service server disable
+y
+ntp-service ipv6 server disable
+y
+ntp-service source-interface Loopback 1
+ntp-service unicast-server 172.19.216.34 version 2
+#
+clock timezone GMT minus 05:00:00
+#
+snmp-agent
+snmp-agent sys-info contact Claro - OM Team
+snmp-agent sys-info location LI1264 ElSoldeNaranjal2 LIMA PERU
+snmp-agent sys-info version v2c v3
+snmp-agent community complexity-check disable
+snmp-agent community write cipher Perl3t5 acl 2000
+snmp-agent mib-view included iso iso
+snmp-agent mib-view included iso-view iso
+snmp-agent mib-view included isoview iso
+snmp-agent group v3 NCETrap privacy read-view iso write-view iso notify-view iso acl 2000
+snmp-agent target-host host-name NCEController_Polo1 trap address udp-domain 10.96.209.105 source LoopBack1 params securityname NCETrap_Claro v3 privacy private-netmanager ext-vb
+snmp-agent target-host host-name NCEController_VES trap address udp-domain 10.96.209.233 source LoopBack1 params securityname NCETrap_Claro v3 privacy private-netmanager ext-vb
+snmp-agent usm-user v3 NCETrap_Claro
+snmp-agent usm-user v3 NCETrap_Claro group NCETrap
+snmp-agent usm-user v3 NCETrap_Claro authentication-mode sha
+Claro@123
+Claro@123
+snmp-agent usm-user v3 NCETrap_Claro privacy-mode aes128
+Claro@123
+Claro@123
+snmp-agent trap source Loopback 1
+snmp-agent trap enable
+snmp-agent protocol source-status all-interface
+snmp-agent protocol source-status ipv6 all-interface
+#
+#
+nqa twamp
+server
+tcp port 862 all
+control-session inactive 900
+tcp listen-mode any-ip
+reflector
+test-session inactive 900
+#
+ssh server hmac sha2_256_96 sha2_256 sha1_96
+#
+user-interface con 0
+authentication-mode password
+set authentication password cipher T3mporal2mil*
+#
+user-interface vty 0 4
+authentication-mode aaa
+user privilege level 15
+acl 2001 inbound
+protocol inbound ssh
+#
+#
+commit
+#Esperar unos segundos
+#
+q
+save
+y
+
+
+system-view 
+interface GigabitEthernet 0/2/0
+shutdown
+ interface GigabitEthernet 0/2/1
+shutdown
+ interface GigabitEthernet 0/2/2
+shutdown
+ interface GigabitEthernet 0/2/3
+undo shutdown
+ interface GigabitEthernet 0/2/4
+shutdown
+ interface GigabitEthernet 0/2/5
+shutdown
+ interface GigabitEthernet 0/2/6
+shutdown
+ interface GigabitEthernet 0/2/7
+shutdown
+ interface GigabitEthernet 0/2/8
+shutdown
+ interface GigabitEthernet 0/2/9
+shutdown
+ interface GigabitEthernet 0/2/10
+shutdown
+ interface GigabitEthernet 0/2/11
+shutdown
+ interface GigabitEthernet 0/2/12
+shutdown
+ interface GigabitEthernet 0/2/13
+shutdown
+ interface GigabitEthernet 0/2/14
+shutdown
+ interface GigabitEthernet 0/2/15
+shutdown
+ interface GigabitEthernet 0/2/16
+shutdown
+ interface GigabitEthernet 0/2/17
+shutdown
+ interface GigabitEthernet 0/2/18
+shutdown
+ interface GigabitEthernet 0/2/19
+shutdown
+ interface GigabitEthernet 0/2/20
+shutdown
+ interface GigabitEthernet 0/2/21
+shutdown
+ interface GigabitEthernet 0/2/22
+shutdown
+ interface GigabitEthernet 0/2/23
+shutdown
+ interface GigabitEthernet 0/2/24
+shutdown
+ interface GigabitEthernet 0/2/25
+shutdown
+ interface GigabitEthernet 0/2/26
+shutdown
+ interface GigabitEthernet 0/2/27
+shutdown
+commit label apagado_port
+
+save
+y

@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Generador de Scripts de Configuración</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 50%, #162231 100%);
+        color: #e4e7eb;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: radial-gradient(circle at top left, rgba(59,130,246,0.12), transparent 25%),
+                    radial-gradient(circle at bottom right, rgba(16,185,129,0.10), transparent 25%),
+                    linear-gradient(135deg, #0f1419 0%, #1a1f2e 50%, #162231 100%);
+      }
+
+      .page {
+        width: min(100%, 1400px);
+        margin: 24px auto 48px;
+        padding: 32px;
+        background: rgba(26,31,46,0.90);
+        border: 1px solid rgba(59,130,246,0.20);
+        border-radius: 32px;
+        box-shadow: 0 40px 110px rgba(0,0,0,0.30);
+      }
+
+      .hero {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 28px;
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(2.8rem, 4vw, 4.4rem);
+        line-height: 1.02;
+        color: #e4e7eb;
+      }
+
+      .hero p {
+        margin: 0;
+        color: #9ca3af;
+        font-size: 1.05rem;
+        line-height: 1.8;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 26px;
+      }
+
+      .tab-btn {
+        flex: 1;
+        padding: 16px 20px;
+        border-radius: 18px;
+        border: 1px solid transparent;
+        background: rgba(59,130,246,0.10);
+        color: #9ca3af;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s ease, border-color 0.2s ease;
+      }
+
+      .tab-btn.active {
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        color: white;
+        border-color: rgba(59,130,246,0.60);
+      }
+
+      .card {
+        padding: 28px;
+        border-radius: 32px;
+        background: rgba(42,63,95,0.85);
+        border: 1px solid rgba(59,130,246,0.25);
+      }
+
+      .search-form,
+      .form-grid {
+        display: grid;
+        gap: 20px;
+      }
+
+      .section {
+        margin-bottom: 28px;
+      }
+
+      .form-group {
+        display: grid;
+        gap: 10px;
+      }
+
+      label {
+        font-weight: 700;
+        color: #d1d5db;
+      }
+
+      input[type="text"], textarea, select {
+        width: 100%;
+        min-height: 54px;
+        padding: 16px 18px;
+        border: 1px solid rgba(59,130,246,0.30);
+        border-radius: 16px;
+        background: rgba(26,31,46,0.95);
+        font-size: 1rem;
+        color: #e4e7eb;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      textarea {
+        min-height: 220px;
+        line-height: 1.6;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        resize: vertical;
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
+      }
+
+      textarea[readonly] {
+        min-height: 340px;
+      }
+
+      input[type="text"]:focus, textarea:focus, select:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 4px rgba(59,130,246,0.15);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .inline-button {
+        width: max-content;
+        align-self: start;
+        padding: 12px 18px;
+        border: 1px solid rgba(148,163,184,0.40);
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: #f1f5f9;
+        font-weight: 700;
+        border-radius: 14px;
+        cursor: pointer;
+      }
+
+      button {
+        min-height: 54px;
+        border: none;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        color: white;
+        padding: 0 30px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      button:hover {
+        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 18px 32px rgba(59,130,246,0.25);
+      }
+
+      .hint {
+        font-size: 0.95rem;
+        color: #9ca3af;
+      }
+
+      .message {
+        margin: 20px 0 0;
+        padding: 22px;
+        border-radius: 20px;
+        font-size: 0.98rem;
+        line-height: 1.6;
+      }
+
+      .error {
+        background: rgba(248,113,113,0.14);
+        color: #fecaca;
+        border: 1px solid rgba(248,113,113,0.25);
+      }
+
+      .success {
+        background: rgba(34,197,94,0.14);
+        color: #bbf7d0;
+        border: 1px solid rgba(34,197,94,0.25);
+      }
+
+      .result-card {
+        margin-top: 24px;
+        padding: 24px;
+        border-radius: 24px;
+        background: rgba(42,63,95,0.85);
+        border: 1px solid rgba(59,130,246,0.25);
+        box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+      }
+
+      .result-grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .result-item {
+        padding: 20px 22px;
+        border-radius: 20px;
+        background: rgba(26,31,46,0.90);
+      }
+
+      .result-item strong {
+        display: block;
+        margin-bottom: 8px;
+        color: #60a5fa;
+        font-size: 0.95rem;
+      }
+
+      .result-item span {
+        font-size: 1.05rem;
+        color: #d1d5db;
+        word-break: break-all;
+      }
+
+      .table-wrapper {
+        overflow-x: auto;
+        margin-top: 20px;
+      }
+
+      .form-grid {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .form-grid .form-group {
+        margin-bottom: 0;
+      }
+
+      .full-width {
+        grid-column: 1 / -1;
+      }
+
+      .zone-divider {
+        grid-column: 1 / -1;
+        border: none;
+        border-top: 1px solid rgba(148,163,184,0.3);
+        margin: 20px 0;
+      }
+
+      .output-card {
+        margin-top: 24px;
+        padding: 24px;
+        border-radius: 24px;
+        background: rgba(15,23,42,0.92);
+        border: 1px solid rgba(71,85,105,0.22);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        min-width: 720px;
+      }
+
+      th, td {
+        padding: 16px 18px;
+        text-align: left;
+      }
+
+      th {
+        background: rgba(99,102,241,0.12);
+        color: #e2e8f0;
+        font-weight: 700;
+      }
+
+      tr {
+        border-bottom: 1px solid rgba(148,163,184,0.12);
+      }
+
+      tr:last-child {
+        border-bottom: none;
+      }
+
+      td {
+        background: rgba(15,23,42,0.85);
+        color: #cbd5e1;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        font-weight: 700;
+        background: rgba(59,130,246,0.16);
+        color: #bfdbfe;
+        margin-top: 16px;
+      }
+
+      .footer {
+        margin-top: 30px;
+        color: #94a3b8;
+        font-size: 0.95rem;
+      }
+
+      @media (max-width: 880px) {
+        .result-grid,
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="hero">
+        <div>
+          <h1>Generador de Scripts de Configuración</h1>
+          <p>Genera scripts de configuración para topologías <strong>AGG - rCSR</strong> y <strong>AGG - preagregador - rCSR</strong> de manera automática.</p>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button type="button" class="tab-btn active" data-target="section-search">Buscar router</button>
+        <button type="button" class="tab-btn" data-target="section-data">Datos</button>
+        <button type="button" class="tab-btn" data-target="section-script-agg">Script AGG</button>
+        <button type="button" class="tab-btn" data-target="section-script-preagg" style="display: none;">Script Preagregador</button>
+        <button type="button" class="tab-btn" data-target="section-script-rcsr">Script rCSR</button>
+      </div>
+
+      <div id="section-search" class="section">
+        <div class="card search-form">
+          <form method="post">
+            <div class="form-group">
+              <label for="router_name">Buscar router (uno o múltiples)</label>
+              <textarea id="router_name" name="router_name" placeholder="Escribe nombres separados por línea o coma.&#10;Ej:&#10;hostname1&#10;hostname2&#10;10.1.1.1">{{ router_name|e }}</textarea>
+            </div>
+            <div class="actions">
+              <button type="submit">Buscar en MySQL</button>
+              <span class="hint">Resultados en <strong>hostname</strong>, <strong>Loopback0</strong>, <strong>Loopback1</strong> o <strong>Región</strong>.</span>
+            </div>
+          </form>
+
+          {% if error %}
+            <div class="message error">{{ error }}</div>
+          {% endif %}
+
+          {% if result %}
+            <div class="message success">{{ result.title }}</div>
+            {% if result.type == 'single' %}
+              <div class="result-card">
+                <div class="result-grid">
+                  <div class="result-item">
+                    <strong>hostname</strong>
+                    <span>{{ result.item.hostname or 'N/A' }}</span>
+                  </div>
+                  <div class="result-item">
+                    <strong>Loopback0</strong>
+                    <span>{{ result.item.loopback_0 or 'N/A' }}</span>
+                  </div>
+                  <div class="result-item">
+                    <strong>IPv6</strong>
+                    <span>{{ result.item.ipv6 or '---' }}</span>
+                  </div>
+                  <div class="result-item">
+                    <strong>Loopback1</strong>
+                    <span>{{ result.item.loopback_1 or 'N/A' }}</span>
+                  </div>
+                  <div class="result-item">
+                    <strong>Región</strong>
+                    <span>{{ result.item.region or 'N/A' }}</span>
+                  </div>
+                  <div class="result-item">
+                    <strong>Zona</strong>
+                    <span>{{ result.item.zone or 'N/A' }}</span>
+                  </div>
+                </div>
+                <div class="badge">Tipo: {{ result.item.type }}</div>
+              </div>
+            {% elif result.type == 'list' %}
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Tipo</th>
+                      <th>hostname</th>
+                      <th>Loopback0</th>
+                      <th>IPv6</th>
+                      <th>Loopback1</th>
+                      <th>Región</th>
+                      <th>Zona</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in result.rows %}
+                      <tr>
+                        <td>{{ item.type }}</td>
+                        <td>{{ item.hostname or 'N/A' }}</td>
+                        <td>{{ item.loopback_0 or 'N/A' }}</td>
+                        <td>{{ item.ipv6 or '---' }}</td>
+                        <td>{{ item.loopback_1 or 'N/A' }}</td>
+                        <td>{{ item.region or 'N/A' }}</td>
+                        <td>{{ item.zone or 'N/A' }}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+
+      <div id="section-data" class="section" hidden>
+        <div class="card search-form">
+          <form method="post">
+            <input type="hidden" name="mode" value="data" />
+            <div class="form-group">
+              <label for="topology">Topología</label>
+              <select id="topology" name="topology" onchange="updateFields()">
+                <option value="1" {% if data_form.topology == "1" %}selected{% endif %}>AGG - rCSR</option>
+                <option value="2" {% if data_form.topology == "2" %}selected{% endif %}>AGG - preagregador - rCSR</option>
+                <option value="3" {% if data_form.topology == "3" %}selected{% endif %}>AGG - MW - rCSR</option>
+              </select>
+            </div>
+            <div class="form-grid">
+              <div class="form-group full-width agg-button-group">
+                <button type="submit" name="action" value="fetch_agg" class="inline-button">Obtener datos AGG</button>
+              </div>
+              <div class="form-group">
+                <label for="agg_hostname">AGG hostname</label>
+                <input id="agg_hostname" name="agg_hostname" type="text" value="{{ data_form.agg_hostname|e }}" placeholder="ASG-LIM-LosOlivos2" />
+              </div>
+              <div class="form-group">
+                <label for="agg_port">Puerto AGG</label>
+                <input id="agg_port" name="agg_port" type="text" value="{{ data_form.agg_port|e }}" placeholder="0/8/2" />
+              </div>
+              <div class="form-group">
+                <label for="agg_loopback0">AGG Loopback0</label>
+                <input id="agg_loopback0" name="agg_loopback0" type="text" value="{{ data_form.agg_loopback0|e }}" readonly />
+              </div>
+              <div class="form-group ipv6-field" style="display: {% if data_form.agg_loopback0_ipv6 %}grid{% else %}none{% endif %};">
+                <label for="agg_loopback0_ipv6">AGG Loopback0 IPv6</label>
+                <input id="agg_loopback0_ipv6" name="agg_loopback0_ipv6" type="text" value="{{ data_form.agg_loopback0_ipv6|e }}" readonly />
+              </div>
+              <div class="form-group">
+                <label for="agg_loopback1">AGG Loopback1</label>
+                <input id="agg_loopback1" name="agg_loopback1" type="text" value="{{ data_form.agg_loopback1|e }}" readonly />
+              </div>
+              <div class="form-group">
+                <label for="agg_zone">Zona AGG</label>
+                <input id="agg_zone" name="agg_zone" type="text" value="{{ data_form.agg_zone|e }}" readonly />
+              </div>
+              <div class="form-group">
+                <label for="agg_community">Comunidad</label>
+                <input id="agg_community" name="agg_community" type="text" value="{{ data_form.agg_community|e }}" readonly />
+              </div>
+              <hr class="zone-divider" />
+              <div class="form-group full-width preagg-button-group preagg-field" style="display: none;">
+                <button type="submit" name="action" value="fetch_preagg" class="inline-button">Obtener datos Preagg</button>
+              </div>
+              <div class="form-group preagg-field" style="display: none;">
+                <label for="preagg_hostname">Preagregador hostname</label>
+                <input id="preagg_hostname" name="preagg_hostname" type="text" value="{{ data_form.preagg_hostname|e }}" placeholder="rCSRPreagg" />
+              </div>
+              <div class="form-group preagg-field" style="display: none;">
+                <label for="preagg_port">Puerto Preagregador</label>
+                <input id="preagg_port" name="preagg_port" type="text" value="{{ data_form.preagg_port|e }}" placeholder="0/2/3" />
+              </div>
+              <div class="form-group preagg-field" style="display: none;">
+                <label for="preagg_loopback0">Preagregador Loopback0</label>
+                <input id="preagg_loopback0" name="preagg_loopback0" type="text" value="{{ data_form.preagg_loopback0|e }}" placeholder="10.134.106.231" />
+              </div>
+              <hr class="zone-divider" />
+              <div class="form-group">
+                <label for="rcsr_hostname">Hostname rCSR remoto</label>
+                <input id="rcsr_hostname" name="rcsr_hostname" type="text" value="{{ data_form.rcsr_hostname|e }}" placeholder="rCSRElSoldeNaranjal2" />
+              </div>
+              <div class="form-group">
+                <label for="rcsr_port">Puerto rCSR remoto</label>
+                <input id="rcsr_port" name="rcsr_port" type="text" value="{{ data_form.rcsr_port|e }}" placeholder="0/2/3" />
+              </div>
+              <div class="form-group">
+                <label for="wan_ip">WAN IP</label>
+                <input id="wan_ip" name="wan_ip" type="text" value="{{ data_form.wan_ip|e }}" placeholder="10.253.156.52" />
+              </div>
+              <div class="form-group">
+                <label for="csr_loopback0">Loopback0 rCSR</label>
+                <input id="csr_loopback0" name="csr_loopback0" type="text" value="{{ data_form.csr_loopback0|e }}" placeholder="10.253.32.220" />
+              </div>
+              <div class="form-group ipv6-field" style="display: {% if data_form.wan_ipv6 or data_form.csr_loopback0_ipv6 or data_form.locator %}grid{% else %}none{% endif %};">
+                <label for="csr_loopback0_ipv6">Lo0 IPv6</label>
+                <input id="csr_loopback0_ipv6" name="csr_loopback0_ipv6" type="text" value="{{ data_form.csr_loopback0_ipv6|e }}" placeholder="2800:200:4:2010:20e::" />
+              </div>
+              <div class="form-group ipv6-field" style="display: {% if data_form.wan_ipv6 or data_form.csr_loopback0_ipv6 or data_form.locator %}grid{% else %}none{% endif %};">
+                <label for="locator">Locator</label>
+                <input id="locator" name="locator" type="text" value="{{ data_form.locator|e }}" placeholder="2800:200:4:2011:20d::" />
+              </div>
+              <div class="form-group ipv6-field" style="display: {% if data_form.wan_ipv6 or data_form.csr_loopback0_ipv6 or data_form.locator %}grid{% else %}none{% endif %};">
+                <label for="wan_ipv6">WAN IPv6</label>
+                <input id="wan_ipv6" name="wan_ipv6" type="text" value="{{ data_form.wan_ipv6|e }}" placeholder="2800:200:4:2012:20e::" />
+              </div>
+              <div class="form-group">
+                <label for="csr_loopback1">Loopback1 rCSR</label>
+                <input id="csr_loopback1" name="csr_loopback1" type="text" value="{{ data_form.csr_loopback1|e }}" placeholder="10.253.0.220" />
+              </div>
+              <div class="form-group">
+                <label for="ospf_area">Area OSPF</label>
+                <input id="ospf_area" name="ospf_area" type="text" value="{{ data_form.ospf_area|e }}" placeholder="5.14.1.51" />
+              </div>
+              <div class="form-group">
+                <label for="cli">CLI / CLLI</label>
+                <input id="cli" name="cli" type="text" value="{{ data_form.cli|e }}" placeholder="LI1264" />
+              </div>
+              <div class="form-group">
+                <label for="cidpext">CIDPEXT</label>
+                <input id="cidpext" name="cidpext" type="text" value="{{ data_form.cidpext|e }}" placeholder="25940352" />
+              </div>
+              <div class="form-group">
+                <label for="ide">IDE</label>
+                <input id="ide" name="ide" type="text" value="{{ data_form.ide|e }}" placeholder="770941" />
+              </div>
+            </div>
+            <div class="form-group full-width">
+              <label for="bulk_input">Pegar fila de datos</label>
+              <textarea id="bulk_input" name="bulk_input" placeholder="Pega aquí la fila completa con columnas separadas por tabulador o espacios múltiples...">{{ data_form.bulk_input|e }}</textarea>
+              <span class="hint">Ejemplo IPv4: LI1264\tEL_SOL_DE_NARANJAL\t<10Km\tASG-LIM-LosOlivos2\t0/8/2\trCSRElSoldeNaranjal2\t0/2/3\t10.253.156.52\t10.253.0.220\t10.253.32.220\t5.14.1.51. En caso IPv6, pega el bloque extendido con las dos filas del formato.</span>
+            </div>
+            <div class="actions">
+              <button type="submit" name="action" value="load_bulk">Cargar datos</button>
+              <button type="submit" name="action" value="generate">Generar SCRIPT</button>
+              <button type="submit" name="action" value="generate_excel">Generar Excel</button>
+              <button type="button" onclick="clearAllFields()">Borrar todo</button>
+              <span class="hint">Cargar datos rellena los campos; Generar SCRIPT crea los scripts; Generar Excel descarga archivo con hojas separadas.</span>
+            </div>
+          </form>
+
+          {% if data_error %}
+            <div class="message error">{{ data_error }}</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div id="section-script-agg" class="section" hidden>
+        <div class="card">
+          <h2>Script AGG</h2>
+          <div class="output-card">
+            <textarea readonly placeholder="El script del ASG aparecerá aquí.">{{ agg_script or "" }}</textarea>
+          </div>
+          {% if agg_error %}
+            <div class="message error">{{ agg_error }}</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div id="section-script-preagg" class="section" hidden>
+        <div class="card">
+          <h2>Script Preagregador</h2>
+          <div class="output-card">
+            <textarea readonly placeholder="El script del preagregador aparecerá aquí.">{{ preagg_script or "" }}</textarea>
+          </div>
+          {% if preagg_error %}
+            <div class="message error">{{ preagg_error }}</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div id="section-script-rcsr" class="section" hidden>
+        <div class="card">
+          <h2>Script rCSR</h2>
+          <div class="output-card">
+            <textarea readonly placeholder="El script del rCSR aparecerá aquí.">{{ rcsr_script or "" }}</textarea>
+          </div>
+          {% if rcsr_error %}
+            <div class="message error">{{ rcsr_error }}</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <p class="footer">Puerto de Flask: <strong>5051</strong>. Ejecuta <code>python app.py</code> dentro de esta carpeta para iniciar la aplicación.</p>
+    </div>
+    <script>
+      const tabs = document.querySelectorAll('.tab-btn');
+      const sections = {
+        search: document.getElementById('section-search'),
+        data: document.getElementById('section-data'),
+        'script-agg': document.getElementById('section-script-agg'),
+        'script-preagg': document.getElementById('section-script-preagg'),
+        'script-rcsr': document.getElementById('section-script-rcsr'),
+      };
+
+      function activateTab(target) {
+        tabs.forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.target === target);
+        });
+        Object.values(sections).forEach(section => section.hidden = true);
+        const panel = document.getElementById(target);
+        if (panel) panel.hidden = false;
+      }
+
+      function updateFields() {
+        const topology = document.getElementById('topology').value;
+        const preaggFields = document.querySelectorAll('.preagg-field');
+        const preaggTab = document.querySelector('[data-target="section-script-preagg"]');
+        const aggButtonGroup = document.querySelector('.agg-button-group');
+        const preaggButtonGroup = document.querySelector('.preagg-button-group');
+        const aggPortField = document.getElementById('agg_port');
+
+        preaggFields.forEach(field => {
+          field.style.display = topology === '2' ? 'grid' : 'none';
+        });
+
+        if (aggButtonGroup) {
+          aggButtonGroup.style.display = 'grid';
+        }
+        if (preaggButtonGroup) {
+          preaggButtonGroup.style.display = topology === '2' ? 'grid' : 'none';
+        }
+        if (preaggTab) {
+          preaggTab.style.display = topology === '2' ? 'inline-flex' : 'none';
+        }
+        if (aggPortField) {
+          aggPortField.disabled = topology === '2';
+          aggPortField.title = topology === '2' ? 'No requerido en topología 2' : '';
+        }
+      }
+
+      function clearAllFields() {
+        const inputs = document.querySelectorAll('input[type="text"], textarea');
+        inputs.forEach(input => {
+          input.value = '';
+        });
+        // Reset topology to default
+        document.getElementById('topology').value = '1';
+        updateFields();
+      }
+
+      tabs.forEach(btn => {
+        btn.addEventListener('click', () => activateTab(btn.dataset.target));
+      });
+
+      activateTab('{{ active_section }}');
+      updateFields();
+    </script>
+  </body>
+</html>
